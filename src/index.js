@@ -12,7 +12,7 @@ const rerenderEntireTree = () => {
     root.render(
         <React.StrictMode>
             {/*<StoreContext.Provider value={store}>*/}
-            <Provider value={store}>
+            <Provider store={store}>
                 <App />
             </Provider>
             {/*</StoreContext.Provider>*/}

@@ -6,7 +6,7 @@ import PopularFriends from "./PopularFriends/PopularFriends";
 
 const Navbar = (props) => {
     const friends = props.friends.map( f =>
-        <PopularFriends name = {f.name} />
+        <PopularFriends key = {f.id} name = {f.name} />
      )
     return (
         <nav className={classes.nav}>
@@ -15,6 +15,9 @@ const Navbar = (props) => {
             </div>
             <div>
                 <NavLink to="/dialogs" className={ navData => isActivated(navData) }>Messages</NavLink>
+            </div>
+            <div>
+                <NavLink to="/users" className={ navData => isActivated(navData) }>Users</NavLink>
             </div>
             <div>
                 <NavLink to="/news" className={ navData => isActivated(navData) }>News</NavLink>

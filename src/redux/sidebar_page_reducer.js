@@ -7,7 +7,9 @@ const sidebar = {
     ]
 };
 const sidebarPageReducer = (state = sidebar, action) => {
-    const stateCopy = Object.assign({},state);
-    return stateCopy;
+    return {
+        ...state,
+        popularFriends: [...state.popularFriends]
+    };
 }
 export default sidebarPageReducer;

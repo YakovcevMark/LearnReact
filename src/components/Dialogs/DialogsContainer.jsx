@@ -1,9 +1,17 @@
 import Dialogs from "./Dialogs";
 
-import {addMessageActionCreator, updateMessageTextActionCreator} from "../../redux/dialogs_page_reducer";
-import {useContext} from "react";
+import {addMessage, updateMessageText} from "../../redux/dialogs_page_reducer";
+import React, {useContext} from "react";
 import StoreContext from "../../store-context";
 import {connect} from "react-redux";
+import {Navigate} from "react-router-dom";
+import withAuthNavigate from "../Hocs/withAuthNavigateComponent/withAuthNavigate";
+
+class DialogsClass extends React.Component {
+    render() {
+        return <Dialogs {...this.props} />
+    }
+}
 
 // const DialogsContainer = (props) => {
 //     const store = useContext(StoreContext);
@@ -16,13 +24,14 @@ import {connect} from "react-redux";
 //     }
 //
 //     return (
-//         <Dialogs
+//         <DialogsClass
 //             addMessage={onAddMessage}
 //             updateMessageText={onUpdateMessageText}
 //             state={store.getState().dialogsPage}
 //         />
 //     )
 // }
+// withAuthNavigate(DialogsContainer)
 const mapStateToProps = state => {
     return {
         state: state.dialogsPage
@@ -31,12 +40,12 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         addMessage: () => {
-            dispatch(addMessageActionCreator())
+            dispatch(addMessage())
         },
         updateMessageText: (newText) => {
-            dispatch(updateMessageTextActionCreator(newText))
+            dispatch(updateMessageText(newText))
         }
     }
 }
-const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs)
+const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(DialogsClass)
 export default DialogsContainer;
