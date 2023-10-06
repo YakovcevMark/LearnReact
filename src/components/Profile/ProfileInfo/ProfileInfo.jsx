@@ -1,5 +1,6 @@
 import classes from './ProfileInfo.module.css';
 import ProfileStatus from "./ProfileStatus";
+import {updateProfileStatusRequest} from "../../../redux/profile_page_reducer";
 
 const ProfileInfo = (props) => {
     if (!props.profileInfo)
@@ -26,8 +27,8 @@ const ProfileInfo = (props) => {
             <div>
                 <ProfileStatus
                     status={props.status}
-                    getProfileStatus={props.getProfileStatus}
-                    updateProfileStatus={props.updateProfileStatus}
+                    getProfileStatus={props.getProfileStatusRequest}
+                    updateProfileStatus={props.updateProfileStatusRequest}
                     router={props.router}
                 />
             </div>

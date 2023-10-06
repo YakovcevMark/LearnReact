@@ -1,20 +1,19 @@
-import React, {useContext} from "react"
+import React from "react"
 import {Navigate} from "react-router-dom";
-import StoreContext from "../../../store-context";
+import {connect} from "react-redux";
 
 
-function withAuthNavigate(Component) {
-    function ComponentWithAuthState(props) {
-        const store = useContext(StoreContext)
-        return <Component {...props} isAuth={store.getState().auth.isAuth}/>
+let mapStateToProps = state => {
+    return {
+        isAuth: state.auth.isAuth,
     }
-    class ComponentWithAuthNavigate extends React.Component {
-       render() {
-           if(!this.props.isAuth) return <Navigate to="/login/"/>
-           return <ComponentWithAuthState />
-       }
-    }
-
-    return ComponentWithAuthNavigate;
 }
-export default withAuthNavigate;
+
+export const withAuthNavigate = (Component) => {
+    const ComponentWithAuthNavigate = (props) => {
+        if(!props.isAuth && !props.router.params.userId) return <Navigate to="/login/"/>
+        return <Component {...props}/>
+    }
+    return connect(mapStateToProps,null)(ComponentWithAuthNavigate);
+}
+

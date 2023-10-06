@@ -4,42 +4,45 @@ const instance = axios.create({
     baseURL: "https://social-network.samuraijs.com/api/1.0/",
     withCredentials: true,
     headers: {"API-KEY": "8d09abf8-2a50-4564-8e2f-d00a6cf398df"}
-
 })
 export const usersAPI = {
-    getUsers(pageSize,currentPage){
-        return instance.get(`users?count=${pageSize}&page=${currentPage}`)
-            .then(resp => resp.data)
+    async getUsersRequest(pageSize, currentPage) {
+        const resp = await instance.get(`users?count=${pageSize}&page=${currentPage}`)
+        return resp.data;
     },
-    makeFollow(userId){
-        return instance.post(`follow/${userId}`)
-            .then(resp => resp.data)
+    async makeFollow(userId) {
+        const resp = await instance.post(`follow/${userId}`)
+        return resp.data
     },
-    makeUnFollow(userId){
-        return instance.delete(`follow/${userId}`)
-            .then(resp => resp.data)
+    async makeUnFollow(userId) {
+        const resp = await instance.delete(`follow/${userId}`)
+        return resp.data
     }
 }
 export const authAPI = {
-    authorization(){
-        return instance.get(`auth/me`)
-            .then(resp => resp.data)
+    async authorization() {
+        const resp = await instance.get(`auth/me`)
+        return resp.data
     },
-    login(data){
-        return instance.post(`auth/login`,{...data})
-            .then(resp => resp.data)
+    async login(data) {
+        const resp = await instance.post(`auth/login`, {...data})
+        return resp.data
+    },
+    async logout() {
+        const resp = await instance.delete(`auth/login`)
+        return resp.data
     },
 }
 export const profileAPI = {
-    getProfile(userId){
-        return instance.get(`profile/${userId}`)
-            .then(resp => resp.data)
+    async getProfile(userId) {
+        const resp = await instance.get(`profile/${userId}`)
+        return resp.data
     },
-    getStatus(userId){
-        return instance.get(`profile/status/${userId}`)
-            .then(resp => resp.data)
+    async getStatus(userId) {
+        const resp = await instance.get(`profile/status/${userId}`)
+        return resp.data
     },
-    updateStatus(status){
-        return instance.put(`profile/status`,{status})
+    async updateStatus(status) {
+        return await instance.put(`profile/status`, {status})
     }
 }

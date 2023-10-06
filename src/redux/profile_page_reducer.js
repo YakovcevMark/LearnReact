@@ -1,16 +1,15 @@
 import {profileAPI} from "../api/samuraiAPI";
 
 const ADD_POST = "ADD-POST";
-const UPDATE_POST_TEXT = "UPDATE-POST-TEXT";
 const SET_PROFILE_INFO = "SET_PROFILE_INFO";
 const TOGGLE_PRELOADER = "TOGGLE_PRELOADER";
 const SET_PROFILE_STATUS = "SET_PROFILE_STATUS"
+const DELETE_POST = "DELETE_POST";
 const profilePage = {
     postsData: [
         {id: 1, message: "Hi! I love you", likesCount: 15},
         {id: 2, message: "i really hate u!!!!!!!!!!!", likesCount: 20},
     ],
-    newPostText: '',
     profileInfo: null,
     status: '',
     isFetching: false,
@@ -19,19 +18,18 @@ const profilePageReducer = (state = profilePage, action) => {
     switch (action.type) {
         case ADD_POST:
             const newPost = {
-                id: 5,
-                message: state.newPostText,
+                id: state.postsData.length + 1,
+                message: action.newPostBody,
                 likesCount: 0
             };
             return {
                 ...state,
                 postsData: [...state.postsData, newPost],
-                newPostText: ''
             }
-        case UPDATE_POST_TEXT:
+        case DELETE_POST:
             return {
                 ...state,
-                newPostText: action.newText
+                postsData: state.postsData.filter(p => p.id !== action.postId)
             }
         case SET_PROFILE_INFO:
             return {
@@ -54,28 +52,23 @@ const profilePageReducer = (state = profilePage, action) => {
             return state;
     }
 }
-export const addPost = () => ({type: ADD_POST})
-export const updatePostText = (newText) =>
-    ({type: UPDATE_POST_TEXT, newText: newText})
+export const addPost = (newPostBody) => ({type: ADD_POST, newPostBody})
+export const deletePost = (postId) => ({type: DELETE_POST, postId})
 export const setProfileInfo = (profileInfo) => ({type: SET_PROFILE_INFO, profileInfo})
 export const togglePreloader = (isFetching) => ({type: TOGGLE_PRELOADER, isFetching});
 export const setProfileStatus = (status) => ({type: SET_PROFILE_STATUS, status});
-export const getProfileInfo = (userId) => (dispatch) => {
+export const getProfileInfoRequest = (userId) => async (dispatch) => {
     dispatch(togglePreloader(true));
-    profileAPI.getProfile(userId)
-        .then(data => {
-            dispatch(togglePreloader(false));
-            dispatch(setProfileInfo(data));
-        })
+    const data = await profileAPI.getProfile(userId)
+    dispatch(togglePreloader(false));
+    dispatch(setProfileInfo(data));
 };
-export const getProfileStatus = (userId) => (dispatch) => {
-    profileAPI.getStatus(userId)
-        .then(data => {
-            dispatch(setProfileStatus(data));
-        })
+export const getProfileStatusRequest = (userId) => async (dispatch) => {
+    const data = await profileAPI.getStatus(userId)
+    dispatch(setProfileStatus(data));
 };
-export const updateProfileStatus = (status) => (dispatch) => {
-    profileAPI.updateStatus(status)
-        .then(() => dispatch(setProfileStatus(status)));
+export const updateProfileStatusRequest = (status) => async (dispatch) => {
+    await profileAPI.updateStatus(status)
+    dispatch(setProfileStatus(status));
 };
 export default profilePageReducer;
