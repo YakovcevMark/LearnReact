@@ -1,11 +1,7 @@
 import {Field, Form, Formik} from "formik";
 import React from "react";
-import {compose} from "redux";
-import {connect} from "react-redux";
-import {login} from "../../../redux/auth-reducer";
 import classes from "./FormControls.module.css";
-import {Navigate} from "react-router-dom";
-import withRouter from "../../Hocs/WithRouterComponent/WithRouterFunction";
+
 
 function validateEmail(value) {
     let error;
@@ -23,12 +19,12 @@ function validatePassword(value) {
     return error;
 }
 
-const LoginForm = (props) => {
+const LoginForm = ({onSubmit, captchaURL}) => {
     return (
         <Formik
-            initialValues={{email: '', password: '', rememberMe: false}}
+            initialValues={{email: '', password: '', rememberMe: false, captcha: null}}
             onSubmit={(values,
-                       {setSubmitting, setErrors}) => props.login(values, setErrors)
+                       {setSubmitting, setErrors}) => onSubmit(values, setErrors)
             }
         >
             {({
@@ -86,6 +82,19 @@ const LoginForm = (props) => {
                         {errors.apiError &&
                             <span>{errors.apiError}</span>}
                     </div>
+                    <div>
+                        {captchaURL && <img src={captchaURL} alt=""/>}
+                        {captchaURL && <div>
+                            <Field
+                                type="captcha"
+                                name="captcha"
+                                component="input"
+                                placeholder="Enter the captcha"
+                                value={values.captcha}
+                            />
+                        </div>}
+
+                    </div>
                     <button type="submit">
                         Submit
                     </button>
@@ -94,20 +103,4 @@ const LoginForm = (props) => {
         </Formik>
     )
 }
-const Login = (props) => {
-    if(props.isAuth) return <Navigate to={"/profile"}/>
-    return (<div>
-        <h1>LOGIN</h1>
-        <LoginForm {...props}/>
-    </div>)
-}
-const mapStateToProps = state => {
-    return {
-        isAuth: state.auth.isAuth,
-    }
-}
-export default compose(
-    withRouter,
-    connect(mapStateToProps,
-        {login})
-)(Login);
+export default LoginForm;

@@ -14,7 +14,7 @@ const MyPostsContainer = (props) => {
 }
 
 const mapStateToProps = state => ({
-    state: state.profilePage
+    postsData: state.profilePage.postsData
 })
 
 export default connect(mapStateToProps, {addPost, deletePost})(MyPostsContainer)

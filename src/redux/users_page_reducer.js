@@ -16,7 +16,7 @@ const usersPage = {
     isFetching: false,
     followingInProgress: [],
 }
-const usersPageReducer = (state = usersPage, action) => {
+const users_page_reducer = (state = usersPage, action) => {
     switch (action.type) {
         case FOLLOW:
             return {
@@ -80,7 +80,7 @@ export const toggleFollowingInProgress = (isFetching, userId) => ({
 });
 const followUnfollowFlow = async (userId, apiMethod, action, dispatch) => {
     const resp = await apiMethod(userId)
-    if (resp.resultCode === 0)
+    if (resp.data.resultCode === 0)
         dispatch(action(userId));
     dispatch(toggleFollowingInProgress(false, userId));
 }
@@ -88,8 +88,8 @@ export const getUsersRequest = (pageSize, currentPage) => async (dispatch) => {
     dispatch(togglePreloader(true));
     const resp = await usersAPI.getUsersRequest(pageSize, currentPage)
     dispatch(togglePreloader(false));
-    dispatch(setUsers(resp.items));
-    dispatch(setTotalUsersCount(resp.totalCount));
+    dispatch(setUsers(resp.data.items));
+    dispatch(setTotalUsersCount(resp.data.totalCount));
 
 }
 export const makeFollow = (userId) => async (dispatch) => {
@@ -100,4 +100,4 @@ export const makeUnFollow = (userId) => async (dispatch) => {
 }
 
 
-export default usersPageReducer;
+export default users_page_reducer;

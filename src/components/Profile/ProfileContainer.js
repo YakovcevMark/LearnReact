@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react'
 import Profile from "./Profile";
-import profile_page_reducer, {
+import {
     getProfileInfoRequest,
-    getProfileStatusRequest,
+    getProfileStatusRequest, savePhoto, updateProfileRequest,
     updateProfileStatusRequest
 } from "../../redux/profile_page_reducer";
 import withRouter from "../Hocs/WithRouterComponent/WithRouterFunction";
@@ -10,19 +10,39 @@ import {compose} from "redux";
 import {connect} from "react-redux";
 import {withAuthNavigate} from "../Hocs/withAuthNavigateComponent/withAuthNavigate";
 import {getIsFetching, getProfileInfo, getStatus, getUserId} from "../../redux/profile_selectors";
+import Preloader from "../common/Preloader/Preloader";
 
 
-const ProfileContainer = (props) => {
-    let userId = props.router.params.userId || props.sessionUserId;
+const ProfileContainer = ({
+                              router,
+                              sessionUserId,
+                              getProfileInfoRequest,
+                              getProfileStatusRequest,
+                              isFetching,
+                              profileInfo,
+                              status,
+                              updateProfileStatusRequest,
+                              savePhoto,
+                              updateProfileRequest,
+                          }) => {
+    let userId = router.params.userId || sessionUserId;
     useEffect(() => {
-        props.getProfileInfoRequest(userId);
-        props.getProfileStatusRequest(userId);
-    }, [getProfileInfoRequest, getProfileStatusRequest])
-    return (
-        <Profile
-            {...props}
-        />
-    )
+        getProfileInfoRequest(userId);
+        getProfileStatusRequest(userId);
+    }, [getProfileInfoRequest, getProfileStatusRequest, userId])
+    return <>
+        {profileInfo == null ? <Preloader/> : <Profile
+                isOwner={!router.params.userId}
+                isFetching={isFetching}
+                profileInfo={profileInfo}
+                status={status}
+                getProfileStatusRequest={getProfileStatusRequest}
+                updateProfileStatusRequest={updateProfileStatusRequest}
+                router={router}
+                savePhoto={savePhoto}
+                updateProfileRequest={updateProfileRequest}
+            />}
+    </>
 }
 const mapStateToProps = (state) => ({
     profileInfo: getProfileInfo(state),
@@ -32,7 +52,13 @@ const mapStateToProps = (state) => ({
 })
 export default compose(
     connect(mapStateToProps,
-        {getProfileInfoRequest, getProfileStatusRequest, updateProfileStatusRequest}
+        {
+            getProfileInfoRequest,
+            getProfileStatusRequest,
+            updateProfileStatusRequest,
+            savePhoto,
+            updateProfileRequest
+        }
     ),
     withRouter,
     withAuthNavigate,

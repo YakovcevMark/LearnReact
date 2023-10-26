@@ -2,11 +2,9 @@ import {
     getUsersRequest, makeFollow, makeUnFollow,
     setCurrentPage,
     toggleFollowingInProgress,
-} from "../../redux/users-page-reducer";
+} from "../../redux/users_page_reducer";
 import Users from "./Users";
 import React, {useEffect} from "react"
-import Preloader from "../common/Preloader/Preloader";
-
 import {connect} from "react-redux";
 import {compose} from "redux";
 import {
@@ -17,30 +15,30 @@ import {
     getTotalUsersCount, getUsers
 } from "../../redux/users_selectors";
 
-const UsersContainer = (props) => {
+const UsersContainer = ({getUsersRequest, pageSize, currentPage, setCurrentPage, isFetching, totalUsersCount, users, followingInProgress, toggleFollowingInProgress, makeFollow, makeUnFollow}) => {
     useEffect(() => {
-        props.getUsersRequest(props.pageSize, props.currentPage);
+        getUsersRequest(pageSize, currentPage);
 
-    }, [props.pageSize, props.currentPage])
+    }, [currentPage, getUsersRequest, pageSize])
 
     function onPageChanged(numberOfPage) {
-        props.setCurrentPage(numberOfPage);
-        props.getUsersRequest(props.pageSize, numberOfPage)
+        setCurrentPage(numberOfPage);
+        getUsersRequest(pageSize, numberOfPage)
     }
 
 
     return <>
-        {props.isFetching && <Preloader/>}
         <Users
-            currentPage={props.currentPage}
-            totalUsersCount={props.totalUsersCount}
-            pageSize={props.pageSize}
-            users={props.users}
-            followingInProgress={props.followingInProgress}
-            toggleFollowingInProgress={props.toggleFollowingInProgress}
-            makeFollow={props.makeFollow}
-            makeUnFollow={props.makeUnFollow}
+            currentPage={currentPage}
+            totalUsersCount={totalUsersCount}
+            pageSize={pageSize}
+            users={users}
+            followingInProgress={followingInProgress}
+            toggleFollowingInProgress={toggleFollowingInProgress}
+            makeFollow={makeFollow}
+            makeUnFollow={makeUnFollow}
             pageChanged={onPageChanged}
+            isFetching={isFetching}
         />
     </>
 

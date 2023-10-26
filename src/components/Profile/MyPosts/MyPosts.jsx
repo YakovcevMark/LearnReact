@@ -4,19 +4,16 @@ import React from "react";
 import {AddNewPostForm} from "../../common/FormControls/AddNewPostForm";
 
 
-const MyPosts = (props) => {
-    const postElements = props.state.postsData
+const MyPosts = ({postsData, deletePost, addPost}) => {
+    const postElements = postsData
         .map(p => <Post
             key={p.id}
             id={p.id}
             message={p.message}
             likesCount={p.likesCount}
-            deletePost={props.deletePost}
+            deletePost={deletePost}
         />)
 
-    const addPost = (newPostData) => {
-        props.addPost(newPostData.newPostBody)
-    }
 
     return (
         <div className={classes.postsBlock}>

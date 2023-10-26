@@ -4,18 +4,11 @@ import Message from "./Messages/Messages";
 import React from "react";
 import {AddNewMessageForm} from "../common/FormControls/AddNewMessageForm";
 
-const Dialogs = (props) => {
+const Dialogs = ({state, addMessage}) => {
     const dialogsElements =
-        props.state.dialogsData.map(d => <DialogItem id={d.id} name={d.name}/>)
-
+        state.dialogsData.map(d => <DialogItem id={d.id} name={d.name}/>)
     const messagesElements =
-        props.state.messagesData.map(m => <Message id={m.id} message={m.message}/>)
-
-
-    const addMessage = (newMessageData) => {
-        props.addMessage(newMessageData.newMessageBody);
-    }
-
+        state.messagesData.map(m => <Message id={m.id} message={m.message}/>)
     return (
         <div className={classes.dialogs}>
             <div className={classes.dialogItems}>

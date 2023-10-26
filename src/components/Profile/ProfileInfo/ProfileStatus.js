@@ -1,80 +1,36 @@
 import React, {useEffect, useState} from 'react'
 
-
-// class ProfileStatus extends React.Component {
-//     state = {
-//         editMode: false,
-//         status: this.props.status,
-//     }
-//
-//     componentWillUnmount() {
-//         if (this.props.status !== this.state.status)
-//             this.props.updateProfileStatus(this.state.status);
-//     }
-//
-//     onTitleChanged = (e) => {
-//         this.setState({
-//             status: e.target.value,
-//         })
-//     }
-//     toggleEditMode = () => {
-//         this.setState({
-//             editMode: !this.state.editMode,
-//         })
-//     }
-//
-//
-//     render() {
-//         return <div>
-//             {!this.state.editMode
-//                 ? <div>
-//                       <span onDoubleClick={this.toggleEditMode}>
-//                           {this.state.status || "Update status"}
-//                       </span>
-//                 </div>
-//                 : <div>
-//                     <input autoFocus={true}
-//                            onBlur={this.toggleEditMode}
-//                            value={this.state.status}
-//                            onChange={this.onTitleChanged}>
-//                     </input>
-//                 </div>
-//             }
-//         </div>
-//
-//     }
-// }
-const ProfileStatus = (props) => {
+const ProfileStatus = ({isOwner, status, updateProfileStatusRequest }) => {
     const [editMode, setEditMode] = useState(false);
-    const [status, setStatus] = useState(props.status);
+    const [localStatus, setLocalStatus] = useState(status);
 
     useEffect(() => {
-        setStatus(props.status);
-    }, [props.status])
+        setLocalStatus(status);
+    }, [status])
 
     const onTitleChanged = (e) => {
-        setStatus(e.target.value);
+        setLocalStatus(e.target.value);
     }
     const toggleEditMode = () => {
         setEditMode(!editMode);
     }
-    const updateProfileStatus = () => {
+    const onUpdateProfileStatus = () => {
         toggleEditMode();
-        if (props.status !== status)
-            props.updateProfileStatus(status)
+        if (status !== localStatus)
+            updateProfileStatusRequest(localStatus)
     }
     return <div>
-        {editMode
+        {editMode && isOwner
             ? <div>
                 <input autoFocus={true}
-                       onBlur={updateProfileStatus}
-                       value={status}
+                       onBlur={onUpdateProfileStatus}
+                       value={localStatus}
                        onChange={onTitleChanged}>
                 </input>
             </div>
             : <div>
                       <span onDoubleClick={toggleEditMode}>
-                          {status || "Update status"}
+                          {localStatus || "Update status"}
                       </span>
             </div>
         }

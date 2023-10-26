@@ -7,13 +7,13 @@ function validateMessage(value){
     return error;
 
 }
-export const AddNewMessageForm = (props) => {
+export const AddNewMessageForm = ({onSubmit}) => {
     return (
         <Formik
             initialValues={{newMessageBody: ''}}
             onSubmit={(values,
                        {setSubmitting}) => {
-                props.onSubmit(values)
+                onSubmit(values.newMessageBody)
                 values.newMessageBody = '';
             }
             }

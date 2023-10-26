@@ -7,14 +7,14 @@ function validatePostText(value){
     return error;
 
 }
-export const AddNewPostForm = (props) => {
+export const AddNewPostForm = ({onSubmit}) => {
     return (
         <Formik
             initialValues={{newPostBody: ""}}
             onSubmit={(values,
                        {setSubmitting}) => {
-                props.onSubmit(values)
-                values.postBody = '';
+                onSubmit(values.newPostBody)
+                values.newPostBody = '';
             }
             }
         >

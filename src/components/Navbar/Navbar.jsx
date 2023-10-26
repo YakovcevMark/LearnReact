@@ -4,8 +4,8 @@ import {NavLink} from "react-router-dom";
 import PopularFriends from "./PopularFriends/PopularFriends";
 
 
-const Navbar = (props) => {
-    const friends = props.friends.map( f =>
+const Navbar = ({friends}) => {
+    const friendsArray = friends.map( f =>
         <PopularFriends key = {f.id} name = {f.name} />
      )
     return (
@@ -29,7 +29,7 @@ const Navbar = (props) => {
                 <NavLink to="/settings" className={ navData => isActivated(navData) }>Settings</NavLink>
             </div>
             <div className={classes.popularFriends}>
-                {friends}
+                {friendsArray}
             </div>
         </nav>
     )

@@ -1,12 +1,20 @@
 import classes from './Profile.module.css';
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import MyPostsContainer from "./MyPosts/MyPostsContainer";
-import Preloader from "../common/Preloader/Preloader";
 
 const Profile = (props) => {
     return (
         <div className={classes.content}>
-            {props.isFetching ? <Preloader/> : <ProfileInfo {...props}/>}
+                 <ProfileInfo
+                    isOwner={props.isOwner}
+                    savePhoto = {props.savePhoto}
+                    profileInfo={props.profileInfo}
+                    status={props.status}
+                    getProfileStatusRequest={props.getProfileStatusRequest}
+                    updateProfileStatusRequest={props.updateProfileStatusRequest}
+                    router={props.router}
+                    updateProfileRequest={props.updateProfileRequest}
+                />}
             <MyPostsContainer/>
         </div>
     )

@@ -1,11 +1,11 @@
-import {getAuthUserData} from "./auth-reducer";
+import {getAuthUserData} from "./auth_reducer";
 
 const SET_INITIALIZED = "SET_INITIALIZED"
 
 const initialState = {
     initialized: false,
 }
-const appReducer = (state = initialState, action) => {
+const app_reducer = (state = initialState, action) => {
     switch (action.type) {
         case SET_INITIALIZED:
             return {...state, initialized: true}
@@ -15,9 +15,9 @@ const appReducer = (state = initialState, action) => {
 }
 export const setInitialized = () => ({type: SET_INITIALIZED})
 
-export const initializeApp = () => (dispatch) => {
-    dispatch(getAuthUserData())
-        .then(dispatch(setInitialized()))
+export const initializeApp = () => async (dispatch) => {
+    await dispatch(getAuthUserData())
+    dispatch(setInitialized())
 
 }
-export default appReducer;
+export default app_reducer;
