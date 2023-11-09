@@ -1,0 +1,28 @@
+{
+  "files": {
+    "main.css": "/LearnReact/static/css/main.6e679bc9.css",
+    "main.js": "/LearnReact/static/js/main.5b3674e7.js",
+    "static/css/440.a7d6458f.chunk.css": "/LearnReact/static/css/440.a7d6458f.chunk.css",
+    "static/js/440.379e0f09.chunk.js": "/LearnReact/static/js/440.379e0f09.chunk.js",
+    "static/css/469.9f21266e.chunk.css": "/LearnReact/static/css/469.9f21266e.chunk.css",
+    "static/js/469.8b570f81.chunk.js": "/LearnReact/static/js/469.8b570f81.chunk.js",
+    "static/css/517.6f811cab.chunk.css": "/LearnReact/static/css/517.6f811cab.chunk.css",
+    "static/js/517.53a790a5.chunk.js": "/LearnReact/static/js/517.53a790a5.chunk.js",
+    "static/js/651.8a47e9fa.chunk.js": "/LearnReact/static/js/651.8a47e9fa.chunk.js",
+    "static/media/Book.gif": "/LearnReact/static/media/Book.cbf51cb4144f94deae58.gif",
+    "index.html": "/LearnReact/index.html",
+    "main.6e679bc9.css.map": "/LearnReact/static/css/main.6e679bc9.css.map",
+    "main.5b3674e7.js.map": "/LearnReact/static/js/main.5b3674e7.js.map",
+    "440.a7d6458f.chunk.css.map": "/LearnReact/static/css/440.a7d6458f.chunk.css.map",
+    "440.379e0f09.chunk.js.map": "/LearnReact/static/js/440.379e0f09.chunk.js.map",
+    "469.9f21266e.chunk.css.map": "/LearnReact/static/css/469.9f21266e.chunk.css.map",
+    "469.8b570f81.chunk.js.map": "/LearnReact/static/js/469.8b570f81.chunk.js.map",
+    "517.6f811cab.chunk.css.map": "/LearnReact/static/css/517.6f811cab.chunk.css.map",
+    "517.53a790a5.chunk.js.map": "/LearnReact/static/js/517.53a790a5.chunk.js.map",
+    "651.8a47e9fa.chunk.js.map": "/LearnReact/static/js/651.8a47e9fa.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.6e679bc9.css",
+    "static/js/main.5b3674e7.js"
+  ]
+}
